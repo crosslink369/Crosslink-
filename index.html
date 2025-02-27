@@ -11,17 +11,6 @@
   </style>
 </head>
 <body>
-  <h1>Monaco Editor</h1>
-  <div id="editor"></div>
-  <script>
-    require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs' }});
-    require(['vs/editor/editor.main'], function() {
-      var editor = monaco.editor.create(document.getElementById('editor'), {
-        value: "// Type your code here\nfunction hello() {\n  console.log('Hello, world!');\n}",
-        language: 'javascript',
-        theme: 'vs-dark'
-      });
-    });
-  </script>
+  <h1>crosslink</h1>
 </body>
 </html>
