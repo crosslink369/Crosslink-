@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>YouTube Clone</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <body class="bg-gray-100 text-black transition-all">
   
@@ -12,7 +13,7 @@
   <nav class="bg-white shadow-md p-4 flex justify-between items-center">
     <div class="flex items-center space-x-4">
       <button id="menu-toggle" class="text-gray-600 hover:text-gray-900">
-        ☰
+        <span class="material-icons">menu</span>
       </button>
       <img src="https://www.youtube.com/yts/img/yt_1200-vfl4C3T0K.png" alt="YouTube Logo" class="h-8">
     </div>
@@ -20,12 +21,14 @@
     <div class="flex items-center w-1/2">
       <input type="text" id="search-input" placeholder="Search" class="w-full px-4 py-2 border border-gray-300 rounded-l-full">
       <button class="px-6 py-2 bg-gray-100 border border-gray-300 rounded-r-full">
-        🔍
+        <span class="material-icons text-gray-600">search</span>
       </button>
     </div>
 
     <div class="flex items-center space-x-4">
-      <button id="dark-mode-toggle" class="p-2 bg-gray-500 text-white">🌙</button>
+      <button id="dark-mode-toggle" class="p-2 bg-gray-500 text-white">
+        <span class="material-icons">dark_mode</span>
+      </button>
       <img src="https://via.placeholder.com/40" alt="User" class="rounded-full">
     </div>
   </nav>
@@ -33,24 +36,16 @@
   <!-- Sidebar -->
   <aside id="sidebar" class="w-64 bg-white shadow-md p-4 fixed h-full transition-transform transform translate-x-0">
     <ul class="space-y-2">
-      <li><a href="#" class="block p-2 hover:bg-gray-200">🏠 Home</a></li>
-      <li><a href="#" class="block p-2 hover:bg-gray-200">🔥 Trending</a></li>
-      <li><a href="#" class="block p-2 hover:bg-gray-200">🎥 Subscriptions</a></li>
+      <li><a href="#" class="block p-2 hover:bg-gray-200"><span class="material-icons">home</span> Home</a></li>
+      <li><a href="#" class="block p-2 hover:bg-gray-200"><span class="material-icons">whatshot</span> Trending</a></li>
+      <li><a href="#" class="block p-2 hover:bg-gray-200"><span class="material-icons">subscriptions</span> Subscriptions</a></li>
     </ul>
   </aside>
 
-  <!-- Search Results -->
-  <ul id="search-results" class="absolute bg-white shadow-md hidden w-1/3 mt-1 rounded-lg"></ul>
-
   <!-- Main Content -->
   <main class="p-8 ml-64">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      <!-- Video Card -->
-      <div class="video-card cursor-pointer">
-        <img src="https://via.placeholder.com/320x180" alt="Video" class="video-thumbnail">
-        <h3 class="font-semibold text-lg">Video Title</h3>
-        <p class="text-sm text-gray-600">Channel Name</p>
-      </div>
+    <div id="video-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <!-- Videos dynamically loaded here -->
     </div>
   </main>
 
@@ -58,14 +53,10 @@
   <div id="video-modal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center">
     <div class="bg-white p-4 rounded-lg">
       <iframe id="video-frame" width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
-      <button id="close-modal" class="mt-2 p-2 bg-red-500 text-white">Close</button>
+      <button id="close-modal" class="mt-2 p-2 bg-red-500 text-white">
+        <span class="material-icons">close</span>
+      </button>
     </div>
-  </div>
-
-  <!-- Like & Dislike -->
-  <div class="flex space-x-4 mt-4 p-4">
-    <button id="like-btn" class="p-2 bg-blue-500 text-white">👍 Like <span id="like-count">0</span></button>
-    <button id="dislike-btn" class="p-2 bg-red-500 text-white">👎 Dislike <span id="dislike-count">0</span></button>
   </div>
 
   <script>
@@ -74,73 +65,48 @@
       document.getElementById('sidebar').classList.toggle('-translate-x-64');
     });
 
-    // Live Search
+    // Sample Videos
     const videos = [
-      { title: "HTML Tutorial", link: "#" },
-      { title: "CSS Basics", link: "#" },
-      { title: "JavaScript for Beginners", link: "#" }
+      { title: "HTML Tutorial", channel: "Code Academy", views: "1M", time: "1 week ago", link: "https://www.youtube.com/embed/dQw4w9WgXcQ", thumbnail: "https://via.placeholder.com/320x180" },
+      { title: "CSS Basics", channel: "Web Dev", views: "800K", time: "3 days ago", link: "https://www.youtube.com/embed/3JluqTojuME", thumbnail: "https://via.placeholder.com/320x180" },
+      { title: "JavaScript Mastery", channel: "JS Ninja", views: "1.5M", time: "2 months ago", link: "https://www.youtube.com/embed/hdI2bqOjy3c", thumbnail: "https://via.placeholder.com/320x180" }
     ];
 
-    document.getElementById('search-input').addEventListener('input', function () {
-      let query = this.value.toLowerCase();
-      let results = videos.filter(video => video.title.toLowerCase().includes(query));
-      let resultsContainer = document.getElementById('search-results');
-
-      resultsContainer.innerHTML = "";
-      resultsContainer.classList.toggle('hidden', results.length === 0);
-      
-      results.forEach(video => {
-        let li = document.createElement('li');
-        li.innerHTML = `<a href="${video.link}" class="block p-2 hover:bg-gray-200">${video.title}</a>`;
-        resultsContainer.appendChild(li);
+    function loadVideos() {
+      const videoGrid = document.getElementById("video-grid");
+      videoGrid.innerHTML = "";
+      videos.forEach(video => {
+        const videoCard = document.createElement("div");
+        videoCard.classList = "bg-white shadow-md rounded-lg overflow-hidden cursor-pointer";
+        videoCard.innerHTML = `
+          <img src="${video.thumbnail}" alt="Thumbnail" class="w-full">
+          <div class="p-4">
+            <h3 class="font-semibold text-lg">${video.title}</h3>
+            <p class="text-sm text-gray-600">${video.channel}</p>
+            <p class="text-sm text-gray-600">${video.views} views • ${video.time}</p>
+          </div>
+        `;
+        videoCard.addEventListener("click", () => openModal(video.link));
+        videoGrid.appendChild(videoCard);
       });
-    });
-
-    // Video Popup
-    document.querySelector('.video-thumbnail').addEventListener('click', function () {
-      document.getElementById('video-modal').classList.remove('hidden');
-      document.getElementById('video-frame').src = "https://www.youtube.com/embed/dQw4w9WgXcQ";
-    });
-
-    document.getElementById('close-modal').addEventListener('click', function () {
-      document.getElementById('video-modal').classList.add('hidden');
-      document.getElementById('video-frame').src = "";
-    });
-
-    // Like & Dislike System
-    let likeCount = localStorage.getItem('likes') || 0;
-    let dislikeCount = localStorage.getItem('dislikes') || 0;
-
-    document.getElementById('like-count').textContent = likeCount;
-    document.getElementById('dislike-count').textContent = dislikeCount;
-
-    document.getElementById('like-btn').addEventListener('click', function () {
-      likeCount++;
-      localStorage.setItem('likes', likeCount);
-      document.getElementById('like-count').textContent = likeCount;
-    });
-
-    document.getElementById('dislike-btn').addEventListener('click', function () {
-      dislikeCount++;
-      localStorage.setItem('dislikes', dislikeCount);
-      document.getElementById('dislike-count').textContent = dislikeCount;
-    });
-
-    // Dark Mode
-    let darkMode = localStorage.getItem('dark-mode') === 'enabled';
-
-    function applyDarkMode() {
-      document.body.classList.toggle('bg-black', darkMode);
-      document.body.classList.toggle('text-white', darkMode);
-      localStorage.setItem('dark-mode', darkMode ? 'enabled' : 'disabled');
     }
 
-    document.getElementById('dark-mode-toggle').addEventListener('click', function () {
-      darkMode = !darkMode;
-      applyDarkMode();
+    function openModal(link) {
+      document.getElementById("video-frame").src = link;
+      document.getElementById("video-modal").classList.remove("hidden");
+    }
+
+    document.getElementById("close-modal").addEventListener("click", () => {
+      document.getElementById("video-modal").classList.add("hidden");
+      document.getElementById("video-frame").src = "";
     });
 
-    applyDarkMode();
+    document.getElementById("dark-mode-toggle").addEventListener("click", () => {
+      document.body.classList.toggle("bg-black");
+      document.body.classList.toggle("text-white");
+    });
+
+    loadVideos();
   </script>
 
 </body>
