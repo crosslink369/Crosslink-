@@ -1,26 +1,86 @@
 <!DOCTYPE html>
-<html lang="ta">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>எனது இணையப் பக்கம்</title>
+    <title>Ace Editor - Full HTML Editor</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f4f4f4;
-            padding: 20px;
-        }
-        h1 {
-            color: #333;
-        }
-        p {
-            color: #666;
-        }
+        body { font-family: Arial, sans-serif; text-align: center; }
+        #editor { width: 90%; height: 300px; margin: auto; border: 1px solid #ddd; }
+        iframe { width: 90%; height: 300px; border: 1px solid black; margin-top: 10px; }
+        button { margin: 10px; padding: 10px; font-size: 16px; }
+        /* Change editor background and text color */
+.ace_editor {
+    background-color: #222 !important;
+    color: #fff !important;
+}
+
+/* Change cursor color */
+.ace_cursor {
+    color: #00ff00 !important;
+}
+
+/* Change line number styles */
+.ace_gutter {
+    background: #333 !important;
+    color: #ffcc00 !important;
+}
+
+/* Change selected text background */
+.ace_marker-layer .ace_selection {
+    background: rgba(255, 255, 0, 0.5) !important;
+}
+
+/* Change active line highlight */
+.ace_marker-layer .ace_active-line {
+    background: rgba(0, 255, 255, 0.2) !important;
+}
+
+/* Change autocomplete box style */
+.ace_autocomplete {
+    background: #444 !important;
+    border: 1px solid #666 !important;
+    color: #fff !important;
+}
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ext-language_tools.js"></script>
 </head>
 <body>
-    <h1>வணக்கம், இது ஒரு அடிப்படை இணையப் பக்கம்!</h1>
-    <p>இந்தப் பக்கம் HTML மற்றும் CSS கொண்டு உருவாக்கப்பட்டுள்ளது.</p>
+    <h2>Ace Editor - Advanced HTML Editor</h2>
+    <div id="editor">&lt;h1&gt;Hello, Ace Editor!&lt;/h1&gt;</div>
+    <br>
+    <button onclick="runCode()">Run</button>
+    <button onclick="downloadCode()">Download</button>
+    <iframe id="output"></iframe>
+
+    <script>
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.session.setMode("ace/mode/html");
+        editor.setOptions({
+            enableBasicAutocompletion: true,
+            enableLiveAutocompletion: true,
+            enableSnippets: true,
+            showPrintMargin: false
+        });
+
+        function runCode() {
+            let code = editor.getValue();
+            let output = document.getElementById('output').contentDocument;
+            output.open();
+            output.write(code);
+            output.close();
+        }
+
+        function downloadCode() {
+            let code = editor.getValue();
+            let blob = new Blob([code], { type: "text/html" });
+            let link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "code.html";
+            link.click();
+        }
+    </script>
 </body>
 </html>
