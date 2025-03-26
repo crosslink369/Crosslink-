@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>clbrowser Homepage</title>
+    <title>Speed Dial Homepage</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
@@ -16,59 +16,86 @@
         .speed-dial-item:hover {
             transform: translateY(-5px);
         }
+        .iframe-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .iframe-container iframe {
+            width: 90%;
+            height: 90%;
+            border: none;
+        }
+        .iframe-container .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 50%;
+        }
     </style>
 </head>
 <body class="min-h-screen">
     <div class="container mx-auto px-4 py-12 max-w-4xl">
         <header class="text-center mb-12">
-            <h2>clbrowser</h2>
             <h1 class="text-4xl font-bold text-gray-800 mb-2">Speed Dial</h1>
             <p class="text-gray-600">Your quick access dashboard</p>
         </header>
 
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
             <!-- Games -->
-            <a href="https://store.steampowered.com" target="_blank" class="speed-dial-item bg-white rounded-full shadow-md p-6 text-center hover:shadow-lg">
+            <div onclick="openIframe('https://store.steampowered.com')" class="speed-dial-item bg-white rounded-full shadow-md p-6 text-center hover:shadow-lg cursor-pointer">
                 <div class="bg-blue-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                 </div>
                 <h3 class="font-medium text-gray-800">Games</h3>
-            </a>
+            </div>
 
             <!-- YouTube -->
-            <a href="https://youtube.com" target="_blank" class="speed-dial-item bg-white rounded-full shadow-md p-6 text-center hover:shadow-lg">
+            <div onclick="openIframe('https://youtube.com')" class="speed-dial-item bg-white rounded-full shadow-md p-6 text-center hover:shadow-lg cursor-pointer">
                 <div class="bg-red-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
                     </svg>
                 </div>
                 <h3 class="font-medium text-gray-800">YouTube</h3>
-            </a>
+            </div>
 
             <!-- ChatGPT -->
-            <a href="https://chat.openai.com" target="_blank" class="speed-dial-item bg-white rounded-full shadow-md p-6 text-center hover:shadow-lg">
+            <div onclick="openIframe('https://chat.openai.com')" class="speed-dial-item bg-white rounded-full shadow-md p-6 text-center hover:shadow-lg cursor-pointer">
                 <div class="bg-green-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                     </svg>
                 </div>
                 <h3 class="font-medium text-gray-800">ChatGPT</h3>
-            </a>
+            </div>
 
             <!-- News -->
-            <a href="https://news.google.com" target="_blank" class="speed-dial-item bg-white rounded-full shadow-md p-6 text-center hover:shadow-lg">
+            <div onclick="openIframe('https://news.google.com')" class="speed-dial-item bg-white rounded-full shadow-md p-6 text-center hover:shadow-lg cursor-pointer">
                 <div class="bg-yellow-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                     </svg>
                 </div>
                 <h3 class="font-medium text-gray-800">News</h3>
-            </a>
+            </div>
 
             <!-- Anime -->
-            <a href="https://crunchyroll.com" target="_blank" class="speed-dial-item bg-white rounded-full shadow-md p-6 text-center hover:shadow-lg">
+            <div onclick="openIframe('https://crunchyroll.com')" class="speed-dial-item bg-white rounded-full shadow-md p-6 text-center hover:shadow-lg cursor-pointer">
                 <div class="bg-purple-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
@@ -76,7 +103,7 @@
                     </svg>
                 </div>
                 <h3 class="font-medium text-gray-800">Anime</h3>
-            </a>
+            </div>
         </div>
 
         <div class="mt-16 text-center text-gray-500 text-sm">
@@ -84,9 +111,21 @@
         </div>
     </div>
 
+    <div id="iframeContainer" class="iframe-container flex">
+        <button class="close-btn" onclick="closeIframe()">X</button>
+        <iframe id="iframe" src=""></iframe>
+    </div>
+
     <script>
-        // You can add JavaScript functionality here if needed
-        // For example, localStorage to remember frequently used links
+        function openIframe(url) {
+            document.getElementById('iframe').src = url;
+            document.getElementById('iframeContainer').style.display = 'flex';
+        }
+
+        function closeIframe() {
+            document.getElementById('iframe').src = '';
+            document.getElementById('iframeContainer').style.display = 'none';
+        }
     </script>
 </body>
 </html>
