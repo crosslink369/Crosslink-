@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cross-Link | By Surya Prakash | Universal Connectivity App</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/components/copy-button/copy-button.js"></script>
     <style>
         :root {
             --primary: #4a6bff;
@@ -473,7 +475,17 @@
             font-style: italic;
             margin-top: 10px;
         }
+        #web-link-copy{
+          border:1px solid #d1d1d1;
+          padding:2%;
+          border-radius: 2rem;
+          grid-gap:9px;
+        }
         
+        .copy-icon{
+          position: relative;
+          left:100px;
+        }
         /* Responsive Design */
         @media (max-width: 992px) {
             .developer-card {
@@ -636,7 +648,7 @@
             <div class="developer-info">
                 <h2>Surya Prakash</h2>
                 <span class="developer-title">Founder & Lead Developer</span>
-                <p>With a passion for creating seamless digital experiences, Surya Prakash developed Cross-Link to solve the modern problem of device fragmentation. With over 8 years of experience in cross-platform development, he has crafted a solution that works effortlessly across all your devices.</p>
+                <p>With a passion for creating seamless digital experiences, Surya Prakash developed Cross-Link to solve the modern problem of device fragmentation. With over 2 years of experience in cross-platform development, he has crafted a solution that works effortlessly across all your devices.</p>
                 <p>"My vision was to create a bridge between all platforms - something that just works, no matter what devices you use."</p>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-github"></i></a>
@@ -695,30 +707,15 @@
                 <h3>Blazing Fast Transfers</h3>
                 <p>Our optimized protocol delivers transfer speeds up to 5x faster than traditional methods.</p>
             </div>
-            <h3>cl browser setup</h3>
-            
-<div class="w-full max-w-[16rem]">
-    <div class="relative">
-        <label for="npm-install-copy-button" class="sr-only">Label</label>
-        <input id="npm-install-copy-button" type="text" class="col-span-6 bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" value="npm install flowbite" disabled readonly>
-        <button data-copy-to-clipboard-target="npm-install-copy-button" data-tooltip-target="tooltip-copy-npm-install-copy-button" class="absolute end-2 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg p-2 inline-flex items-center justify-center">
-            <span id="default-icon">
-                <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
-                    <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z"/>
-                </svg>
-            </span>
-            <span id="success-icon" class="hidden">
-                <svg class="w-3.5 h-3.5 text-blue-700 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
-                </svg>
-            </span>
-        </button>
-        <div id="tooltip-copy-npm-install-copy-button" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
-            <span id="default-tooltip-message">Copy to clipboard</span>
-            <span id="success-tooltip-message" class="hidden">Copied!</span>
-            <div class="tooltip-arrow" data-popper-arrow></div>
-        </div>
-    </div>
+            <b>cl browser setup</b>
+<div id="web-link-copy">
+  <sl-input id="my-link" readonly value="">
+  https://c4d2b748-50a1-407c-81d2-3889be53e75b-00-3suldds0n89h4.sisko.replit.dev
+</sl-input>
+<sl-copy-button class="copy-icon" from="my-link"></sl-copy-button>
+
+<!-- Hidden Input to Store Full URL -->
+
 </div>
 
             <div style="position: relative; width: 100%; height: 0; padding-top: 177.7778%;
@@ -888,6 +885,13 @@
         if (window.scrollY > 50) {
             document.querySelector('nav').classList.add('nav-glass');
         }
+        
+    </script>
+    <script>
+      
     </script>
 </body>
 </html>
+
+     
+    
