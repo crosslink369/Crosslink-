@@ -1,1281 +1,897 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Cross-Link | By Surya Prakash | Universal Connectivity App</title>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <script src="https://cdn.tailwindcss.com"></script>
-
 <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/components/copy-button/copy-button.js"></script>
-
     <style>
-
         :root {
-
             --primary: #4a6bff;
-
             --primary-light: rgba(74, 107, 255, 0.2);
-
             --text: #2d3748;
-
             --text-light: #4a5568;
-
             --glass: rgba(255, 255, 255, 0.25);
-
             --glass-border: rgba(255, 255, 255, 0.3);
-
             --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
-
         }
-
         
-
         * {
-
             margin: 0;
-
             padding: 0;
-
             box-sizing: border-box;
-
         }
-
         
-
         body {
-
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-
             background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
-
             color: var(--text);
-
             min-height: 100vh;
-
             background-attachment: fixed;
-
             line-height: 1.6;
-
             overflow-x: hidden;
-
         }
-
         
-
         /* Glass effect base styles */
-
         .glass {
-
             background: var(--glass);
-
             backdrop-filter: blur(12px);
-
             -webkit-backdrop-filter: blur(12px);
-
             border: 1px solid var(--glass-border);
-
             box-shadow: var(--glass-shadow);
-
             border-radius: 16px;
-
         }
-
         
-
         /* Menu/Navbar */
-
         nav {
-
             position: fixed;
-
             top: 0;
-
             left: 0;
-
             right: 0;
-
             padding: 20px 5%;
-
             z-index: 1000;
-
             display: flex;
-
             justify-content: space-between;
-
             align-items: center;
-
             transition: all 0.3s ease;
-
         }
-
         
-
         .nav-glass {
-
             background: rgba(255, 255, 255, 0.7);
-
             backdrop-filter: blur(10px);
-
             -webkit-backdrop-filter: blur(10px);
-
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
-
         }
-
         
-
         .logo {
-
             font-size: 1.8rem;
-
             font-weight: 700;
-
             color: var(--primary);
-
             display: flex;
-
             align-items: center;
-
             text-decoration: none;
-
         }
-
         
-
         .logo i {
-
             margin-right: 10px;
-
         }
-
         
-
         .creator-badge {
-
             background: rgba(74, 107, 255, 0.1);
-
             color: var(--primary);
-
             padding: 3px 10px;
-
             border-radius: 20px;
-
             font-size: 0.8rem;
-
             margin-left: 10px;
-
             border: 1px solid rgba(74, 107, 255, 0.3);
-
         }
-
         
-
         .nav-links {
-
             display: flex;
-
             gap: 30px;
-
         }
-
         
-
         .nav-links a {
-
             color: var(--text);
-
             text-decoration: none;
-
             font-weight: 500;
-
             transition: all 0.3s;
-
             position: relative;
-
             white-space: nowrap;
-
         }
-
         
-
         .nav-links a:hover {
-
             color: var(--primary);
-
         }
-
         
-
         .nav-links a:after {
-
             content: '';
-
             position: absolute;
-
             width: 0;
-
             height: 2px;
-
             bottom: -5px;
-
             left: 0;
-
             background-color: var(--primary);
-
             transition: width 0.3s;
-
         }
-
         
-
         .nav-links a:hover:after {
-
             width: 100%;
-
         }
-
         
-
         .mobile-menu-btn {
-
             display: none;
-
             background: none;
-
             border: none;
-
             font-size: 1.5rem;
-
             color: var(--text);
-
             cursor: pointer;
-
             z-index: 1001;
-
         }
-
         
-
         /* Mobile Menu Styles */
-
         .mobile-menu {
-
             position: fixed;
-
             top: 0;
-
             right: -100%;
-
             width: 80%;
-
             max-width: 350px;
-
             height: 100vh;
-
             background: rgba(255, 255, 255, 0.95);
-
             backdrop-filter: blur(10px);
-
             -webkit-backdrop-filter: blur(10px);
-
             box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-
             z-index: 1000;
-
             transition: right 0.3s ease;
-
             display: flex;
-
             flex-direction: column;
-
             padding: 80px 30px 30px;
-
             overflow-y: auto;
-
         }
-
         
-
         .mobile-menu.active {
-
             right: 0;
-
         }
-
         
-
         .mobile-menu a {
-
             color: var(--text);
-
             text-decoration: none;
-
             padding: 15px 0;
-
             font-size: 1.1rem;
-
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-
             transition: all 0.3s;
-
         }
-
         
-
         .mobile-menu a:hover {
-
             color: var(--primary);
-
             padding-left: 10px;
-
         }
-
         
-
         .mobile-menu .home-link {
-
             color: var(--primary);
-
             font-weight: 600;
-
             margin-bottom: 20px;
-
             border-bottom: none;
-
             display: flex;
-
             align-items: center;
-
         }
-
         
-
         .mobile-menu .home-link i {
-
             margin-right: 10px;
-
         }
-
         
-
         .menu-overlay {
-
             position: fixed;
-
             top: 0;
-
             left: 0;
-
             right: 0;
-
             bottom: 0;
-
             background: rgba(0, 0, 0, 0.5);
-
             z-index: 999;
-
             opacity: 0;
-
             visibility: hidden;
-
             transition: all 0.3s ease;
-
         }
-
         
-
         .menu-overlay.active {
-
             opacity: 1;
-
             visibility: visible;
-
         }
-
         
-
         /* Hero Section */
-
         .hero {
-
             padding: 180px 5% 100px;
-
             text-align: center;
-
             position: relative;
-
         }
-
         
-
         .hero-content {
-
             max-width: 800px;
-
             margin: 0 auto;
-
         }
-
         
-
         .hero h1 {
-
             font-size: 3.5rem;
-
             margin-bottom: 20px;
-
             background: linear-gradient(to right, var(--primary), #6b46ff);
-
             -webkit-background-clip: text;
-
             -webkit-text-fill-color: transparent;
-
         }
-
         
-
         .hero p {
-
             font-size: 1.2rem;
-
             color: var(--text-light);
-
             margin-bottom: 40px;
-
         }
-
         
-
         /* Download Cards */
-
         .download-section {
-
             display: flex;
-
             justify-content: center;
-
             flex-wrap: wrap;
-
             gap: 30px;
-
             padding: 0 5%;
-
             margin-bottom: 100px;
-
         }
-
         
-
         .platform-card {
-
             width: 300px;
-
             padding: 30px;
-
             text-align: center;
-
             transition: transform 0.3s;
-
         }
-
         
-
         .platform-card:hover {
-
             transform: translateY(-10px);
-
         }
-
         
-
         .platform-icon {
-
             width: 70px;
-
             height: 70px;
-
             margin: 0 auto 25px;
-
             display: flex;
-
             align-items: center;
-
             justify-content: center;
-
             border-radius: 50%;
-
             background: rgba(255, 255, 255, 0.3);
-
         }
-
         
-
         .platform-icon svg {
-
             width: 40px;
-
             height: 40px;
-
         }
-
         
-
         .platform-card h2 {
-
             margin-bottom: 15px;
-
             font-size: 1.5rem;
-
         }
-
         
-
         .platform-card p {
-
             color: var(--text-light);
-
             margin-bottom: 5px;
-
             font-size: 0.9rem;
-
         }
-
         
-
         .btn-download {
-
             display: inline-block;
-
             background: var(--primary);
-
             color: white;
-
             padding: 12px 25px;
-
             border-radius: 30px;
-
             text-decoration: none;
-
             font-weight: 600;
-
             margin-top: 25px;
-
             transition: all 0.3s;
-
             box-shadow: 0 4px 15px rgba(74, 107, 255, 0.3);
-
         }
-
         
-
         .btn-download:hover {
-
             background: #3a5bef;
-
             transform: translateY(-3px);
-
             box-shadow: 0 6px 20px rgba(74, 107, 255, 0.4);
-
         }
-
         
-
         /* Developer Section */
-
         .developer-section {
-
             padding: 80px 5%;
-
             max-width: 1200px;
-
             margin: 0 auto 100px;
-
         }
-
         
-
         .developer-card {
-
             display: flex;
-
             gap: 40px;
-
             align-items: center;
-
             padding: 40px;
-
         }
-
         
-
         .developer-image {
-
             width: 200px;
-
             height: 200px;
-
             border-radius: 50%;
-
             object-fit: cover;
-
             border: 5px solid rgba(255, 255, 255, 0.3);
-
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-
         }
-
         
-
         .developer-info h2 {
-
             font-size: 2rem;
-
             margin-bottom: 10px;
-
             color: var(--primary);
-
         }
-
         
-
         .developer-title {
-
             display: inline-block;
-
             background: var(--primary-light);
-
             color: var(--primary);
-
             padding: 5px 15px;
-
             border-radius: 20px;
-
             font-size: 1rem;
-
             margin-bottom: 20px;
-
         }
-
         
-
         .developer-info p {
-
             margin-bottom: 20px;
-
             color: var(--text-light);
-
         }
-
         
-
         .social-links {
-
             display: flex;
-
             gap: 15px;
-
         }
-
         
-
         .social-links a {
-
             width: 40px;
-
             height: 40px;
-
             border-radius: 50%;
-
             background: var(--primary-light);
-
             color: var(--primary);
-
             display: flex;
-
             align-items: center;
-
             justify-content: center;
-
             transition: all 0.3s;
-
         }
-
         
-
         .social-links a:hover {
-
             background: var(--primary);
-
             color: white;
-
             transform: translateY(-3px);
-
         }
-
         
-
         /* Features Section */
-
         .features-section {
-
             padding: 80px 5%;
-
             max-width: 1200px;
-
             margin: 0 auto 100px;
-
         }
-
         
-
         .section-title {
-
             text-align: center;
-
             margin-bottom: 60px;
-
         }
-
         
-
         .section-title h2 {
-
             font-size: 2.5rem;
-
             margin-bottom: 15px;
-
         }
-
         
-
         .section-title p {
-
             color: var(--text-light);
-
             max-width: 700px;
-
             margin: 0 auto;
-
         }
-
         
-
         .features-grid {
-
             display: grid;
-
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-
             gap: 30px;
-
         }
-
         
-
         .feature-card {
-
             padding: 30px;
-
             transition: transform 0.3s;
-
         }
-
         
-
         .feature-card:hover {
-
             transform: translateY(-10px);
-
         }
-
         
-
         .feature-icon {
-
             width: 50px;
-
             height: 50px;
-
             margin-bottom: 20px;
-
             display: flex;
-
             align-items: center;
-
             justify-content: center;
-
             border-radius: 12px;
-
             background: var(--primary-light);
-
             color: var(--primary);
-
             font-size: 1.5rem;
-
         }
-
         
-
         .feature-card h3 {
-
             font-size: 1.3rem;
-
             margin-bottom: 15px;
-
         }
-
         
-
         .feature-card p {
-
             color: var(--text-light);
-
         }
-
         
-
         /* Footer */
-
         footer {
-
             padding: 60px 5% 30px;
-
             background: rgba(255, 255, 255, 0.7);
-
             backdrop-filter: blur(10px);
-
             -webkit-backdrop-filter: blur(10px);
-
         }
-
         
-
         .footer-content {
-
             max-width: 1200px;
-
             margin: 0 auto;
-
             display: grid;
-
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-
             gap: 40px;
-
             margin-bottom: 40px;
-
         }
-
         
-
         .footer-column h3 {
-
             font-size: 1.2rem;
-
             margin-bottom: 20px;
-
             color: var(--primary);
-
         }
-
         
-
         .footer-column ul {
-
             list-style: none;
-
         }
-
         
-
         .footer-column ul li {
-
             margin-bottom: 10px;
-
         }
-
         
-
         .footer-column ul li a {
-
             color: var(--text-light);
-
             text-decoration: none;
-
             transition: all 0.3s;
-
         }
-
         
-
         .footer-column ul li a:hover {
-
             color: var(--primary);
-
             padding-left: 5px;
-
         }
-
         
-
         .copyright {
-
             text-align: center;
-
             padding-top: 30px;
-
             border-top: 1px solid rgba(0, 0, 0, 0.1);
-
             color: var(--text-light);
-
             font-size: 0.9rem;
-
         }
-
         
-
         .creator-signature {
-
             font-style: italic;
-
             margin-top: 10px;
-
         }
-
         #web-link-copy{
-
           border:1px solid #d1d1d1;
-
           padding:2%;
-
           border-radius: 2rem;
-
           grid-gap:9px;
-
         }
-
         
-
         .copy-icon{
-
           position: relative;
-
           left:100px;
-
         }
-
         /* Responsive Design */
-
         @media (max-width: 992px) {
-
             .developer-card {
-
                 flex-direction: column;
-
                 text-align: center;
-
             }
-
             
-
             .social-links {
-
                 justify-content: center;
-
             }
-
             
-
             .nav-links {
-
                 display: none;
-
             }
-
             
-
             .mobile-menu-btn {
-
                 display: block;
-
             }
-
         }
-
         
-
         @media (max-width: 768px) {
-
             .hero h1 {
-
                 font-size: 2.5rem;
-
             }
-
             
-
             .platform-card {
-
                 width: 100%;
-
                 max-width: 400px;
-
             }
-
             
-
             .mobile-menu {
-
                 width: 90%;
-
             }
-
             
-
             .logo span {
-
                 display: none;
-
             }
-
             
-
             .creator-badge {
-
                 margin-left: 0;
-
                 display: none;
-
             }
-
         }
-
         
-
         /* Animation Classes */
-
         .fade-in {
-
             opacity: 0;
-
             transform: translateY(30px);
-
             transition: all 0.6s ease-out;
-
         }
-
         
-
         .fade-in.show {
-
             opacity: 1;
-
             transform: translateY(0);
-
         }
-
     </style>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/plyr/3.7.8/plyr.min.css">
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plyr/3.7.8/plyr.min.js"></script>
-
 </head>
-
 <body>
-
     <!-- Navigation -->
-
     <nav class="nav-glass">
-
         <a href="#home" class="logo">
-
             <i class="fas fa-link"></i>
-
             <span>Cross-Link</span>
-
             <span class="creator-badge">by Surya Prakash</span>
-
         </a>
-
         
-
         <div class="nav-links">
-
             <a href="#features">Features</a>
-
             <a href="#download">Download</a>
-
             <a href="#developer">Developer</a>
-
             <a href="#support">Support</a>
-
         </div>
-
         
-
         <button class="mobile-menu-btn">
-
             <i class="fas fa-bars"></i>
-
         </button>
-
         
-
         <div class="mobile-menu">
-
             <a href="#home" class="home-link">
-
                 <i class="fas fa-home"></i>
-
                 <span>Home</span>
-
             </a>
-
             <a href="#features">Features</a>
-
             <a href="#download">Download</a>
-
             <a href="#developer">Developer</a>
-
             <a href="#support">Support</a>
-
         </div>
-
         
-
         <div class="menu-overlay"></div>
-
     </nav>
-
     
-
     <!-- Home Section -->
-
     <section id="home" class="hero">
-
         <div class="hero-content">
-
             <h1>Connect Your World Seamlessly</h1>
-
             <p>Cross Link bridges all your devices and platforms with secure, real-time synchronization and effortless file sharing.</p>
-
             <a href="#download" class="btn-download">Get Started Now</a>
-
         </div>
-
     </section>
-
     
-
     <!-- Download Section -->
-
     <section id="download" class="download-section">
-
         <div class="section-title fade-in">
-
             <h2>Download Cross Link</h2>
-
             <p>Available on all your favorite platforms</p>
-
         </div>
-
         
-
         <div class="download-section">
-
             <div class="platform-card glass fade-in">
-
                 <div class="platform-icon glass">
-
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4a6bff">
-
                         <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-
                     </svg>
-
                 </div>
-
                 <h2>iOS</h2>
-
                 <p>Download for iPhone and iPad</p>
-
                 <p>Requires iOS 13.0 or later</p>
-
                 <a href="https://drive.google.com/file/d/1PCRmft-Km0WaYIaNQSh0q3dvaofzu_hA/view?usp=drivesdk" class="btn-download">Download </a>
-
             </div>
-
             
-
             <div class="platform-card glass fade-in">
-
                 <div class="platform-icon glass">
-
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4a6bff">
-
                         <path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85-.3-.15-.68-.04-.85.26l-1.88 3.24c-2.86-1.21-6.08-1.21-8.94 0L5.65 5.71c-.16-.3-.54-.41-.85-.26-.3.16-.42.54-.26.85L6.4 9.48C3.3 11.25 1.28 14.44 1 18h22c-.28-3.56-2.3-6.75-5.4-8.52zM7 15.25c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25zm10 0c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25z"/>
-
                     </svg>
-
                 </div>
-
                 <h2>Android</h2>
-
                 <p>Download for Android phones and tablets</p>
-
                 <p>Requires Android 8.0 or later</p>
-
                 <a href="https://drive.google.com/file/d/1PCRmft-Km0WaYIaNQSh0q3dvaofzu_hA/view?usp=drivesdk" class="btn-download">Get it</a>
-
             </div>
-
             
-
             <div class="platform-card glass fade-in">
-
                 <div class="platform-icon glass">
-
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#4a6bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-
                         <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-
                         <line x1="8" y1="21" x2="16" y2="21"></line>
-
                         <line x1="12" y1="17" x2="12" y2="21"></line>
-
                     </svg>
-
                 </div>
-
                 <h2>Windows/Mac</h2>
-
                 <p>Desktop version for Windows and macOS</p>
-
                 <p>Sync with your mobile devices</p>
-
                 <a href="https://drive.google.com/file/d/1PCRmft-Km0WaYIaNQSh0q3dvaofzu_hA/view?usp=drivesdk" class="btn-download">Download for Desktop</a>
-
             </div>
-
         </div>
-
     </section>
-
     
-
     <!-- Developer Section -->
-
     <section id="developer" class="developer-section">
+        <div class="section-title fade-in">
+            <h2>Meet the Creator</h2>
+            <p>The visionary behind Cross-Link</p>
+        </div>
+        
+        <div class="developer-card glass fade-in">
+            <img src="https://raw.githubusercontent.com/crosslink369/ytm15.github.io/refs/heads/main/app/Material%20Spinner/IMG_20250328_115004.png" alt="Surya Prakash" class="developer-image">
+            <div class="developer-info">
+                <h2>Surya Prakash</h2>
+                <span class="developer-title">Founder & Lead Developer</span>
+                <p>With a passion for creating seamless digital experiences, Surya Prakash developed Cross-Link to solve the modern problem of device fragmentation. With over 2 years of experience in cross-platform development, he has crafted a solution that works effortlessly across all your devices.</p>
+                <p>"My vision was to create a bridge between all platforms - something that just works, no matter what devices you use."</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fas fa-globe"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="section-title fade-in">
+            <h2>Powerful Features</h2>
+            <p>Cross-Link offers everything you need to stay connected across all your devices</p>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card glass fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-sync-alt"></i>
+                </div>
+                <h3>Real-Time Sync</h3>
+                <p>Changes made on one device appear instantly on all your connected devices with our lightning-fast synchronization.</p>
+            </div>
+            
+            <div class="feature-card glass fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Military-Grade Security</h3>
+                <p>All your data is encrypted end-to-end with AES-256 encryption, ensuring your privacy is always protected.</p>
+            </div>
+            
+            <div class="feature-card glass fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-file-export"></i>
+                </div>
+                <h3>Universal File Support</h3>
+                <p>Transfer any file type between devices, from documents and photos to videos and application files.</p>
+            </div>
+            
+            <div class="feature-card glass fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-cloud"></i>
+                </div>
+                <h3>Cloud Integration</h3>
+                <p>Connect with your existing cloud services like Dropbox, Google Drive, and iCloud for added flexibility.</p>
+            </div>
+            
+            <div class="feature-card glass fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3>Blazing Fast Transfers</h3>
+                <p>Our optimized protocol delivers transfer speeds up to 5x faster than traditional methods.</p>
+            </div>
+            <b>cl browser setup</b>
+<div id="web-link-copy">
+  <sl-input id="my-link" readonly value="">
+  https://c4d2b748-50a1-407c-81d2-3889be53e75b-00-3suldds0n89h4.sisko.replit.dev
+</sl-input>
+<sl-copy-button class="copy-icon" from="my-link"></sl-copy-button>
 
-        <div
+<!-- Hidden Input to Store Full URL -->
+
+</div>
+
+            <div style="position: relative; width: 100%; height: 0; padding-top: 177.7778%;
+ padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
+ border-radius: 8px; will-change: transform;">
+  <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
+    src="https://www.canva.com/design/DAGi53fOdlc/dnqwyJYIcDn8oJ8HlsgITw/watch?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
+  </iframe>
+</div>
+ <!-- Support Section -->
+    <section id="support" class="features-section" style="background: #f9f9ff; padding: 80px 5%; margin-bottom: 0;">
+        <div class="section-title fade-in">
+            <h2>Support Center</h2>
+            <p>We're here to help with any questions or issues</p>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card glass fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <h3>FAQ</h3>
+                <p>Find answers to common questions about Cross-Link's features and functionality.</p>
+                <a href="#" class="btn-download" style="display: inline-block; margin-top: 15px; padding: 8px 20px; font-size: 0.9rem;">View FAQs</a>
+            </div>
+            
+            <div class="feature-card glass fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h3>Contact Us</h3>
+                <p>Reach out to our support team for personalized assistance with any issues.</p>
+                <a href="#" class="btn-download" style="display: inline-block; margin-top: 15px; padding: 8px 20px; font-size: 0.9rem;">Contact Support</a>
+            </div>
+            
+            <div class="feature-card glass fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <h3>Documentation</h3>
+                <p>Detailed guides and technical documentation for getting the most from Cross-Link.</p>
+                <a href="#" class="btn-download" style="display: inline-block; margin-top: 15px; padding: 8px 20px; font-size: 0.9rem;">View Docs</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Cross-Link</h3>
+                <p>The universal connectivity solution for all your devices and platforms.</p>
+                <p class="creator-signature">Created with ❤️ by Surya Prakash</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#download">Download</a></li>
+                    <li><a href="#developer">About</a></li>
+                    <li><a href="#support">Support</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Connect</h3>
+                <ul>
+                    <li><a href="https://x.com/Surya0942333600?t=zObdM0IDaIm1XPHTcNedtA&s=09"><i class="fab fa-twitter"></i> Twitter</a></li>
+                    <li><a href="https://www.instagram.com/surya_prakash_3697?utm_source=qr&igsh=OGNodHBjYXJoZnZx"><i class="fab fa-instagram"></i>instagram</a></li>
+                    <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> Email</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2023 Cross-Link Technologies. All rights reserved.</p>
+        </div>
+    </footer>
+        <script src="https://github.com/wwwstawberrycom/Sbox/blob/main/Video/cl-Video.js"></script>
+
+    <script>
+        // Mobile Menu Functionality
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const menuOverlay = document.querySelector('.menu-overlay');
+        const navLinks = document.querySelectorAll('.nav-links a, .mobile-menu a');
+        
+        // Toggle mobile menu
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        });
+        
+        // Close menu when clicking outside
+        menuOverlay.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        
+        // Close menu when clicking a link
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+                
+                // Smooth scroll to section
+                if(link.getAttribute('href').startsWith('#')) {
+                    const targetId = link.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if(targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+        
+        // Scroll animation
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const appearOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+        
+        const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                } else {
+                    entry.target.classList.add('show');
+                    appearOnScroll.unobserve(entry.target);
+                }
+            });
+        }, appearOptions);
+        
+        fadeElements.forEach(fader => {
+            appearOnScroll.observe(fader);
+        });
+        
+        // Navbar glass effect on scroll
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                document.querySelector('nav').classList.add('nav-glass');
+            } else {
+                document.querySelector('nav').classList.remove('nav-glass');
+            }
+        });
+        
+        // Initialize navbar state
+        if (window.scrollY > 50) {
+            document.querySelector('nav').classList.add('nav-glass');
+        }
+        
+    </script>
+    <script>
+      
+    </script>
+</body>
+</html>
+
+     
+    
